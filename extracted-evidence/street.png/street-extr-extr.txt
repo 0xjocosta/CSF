@@ -1,0 +1,41 @@
+OPERATING SPECI​FICATIONS
+
+DRONE A
+
+Operational Altitude: 5,000 – 12,000ft WGS, no lift loss
+(FAA limited at this time)
+Sensor agnostic system
+Full autonomous flying, terrain following, target tracking, real time GPS waypoints
+Dual Mode – Wireless and Laptop
+Automated return home
+Max / min altitude setting
+Payload up to 15lbs
+Can fly in 30mph crosswinds
+Take off and land in small areas
+Flight Management Integration
+Auto Takeoff, flight, and Landing
+Waypoints – 10cm accuracy terrain following
+Remote camera settings
+GPS integration
+Real time downlink data
+Flight Time
+Gas Powered: 60 – 90 minutes w / 10 – 15lb payload
+Electric Powered: 25 – 45 minutes w / 10 – 15lb payload
+
+DRONE B
+
+Sensor agnostic system​
+Full autonomous flying, target tracking, real time GPS waypoints
+Dual Mode – Wireless and Laptop
+Automated return home
+Max / min altitude setting
+Payload up to 1lb
+Take off and land in small areas
+Flight Management Integration
+Auto Takeoff, flight, and Landing
+Waypoints – 5m accuracy
+Remote camera settings
+GPS integration
+Real time downlink data
+Flight Time
+Electric Powered: 20 minutes w / 1lb payload

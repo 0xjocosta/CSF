@@ -3,18 +3,18 @@ import sys
 from PIL import Image
 
 
-def embed(imgFile, password):
+def embed(imgFile):
     v = []
     img = Image.open(imgFile)
     width, height = img.size
     conv = img.convert('RGBA').getdata()
-    #print '[*] Input image size: %dx%d pixels.' % (width, height)
+    print '[*] Input image size: %dx%d pixels.' % (width, height)
     max_size = width * height * 3.0 / 8 / 1024
-    #print '[*] Usable payload size: %.2f KB.' % max_size
+    print '[*] Usable payload size: %.2f KB.' % max_size
 
     idx = 0
     displacement = 0
-    #password = 0
+    password = 0
     for h in range(height):
         for w in range(width):
             if displacement < password:
@@ -28,7 +28,7 @@ def embed(imgFile, password):
             v.append(set_bit(g, 1))
             v.append(set_bit(b, 0))
             v.append(set_bit(b, 1))
-    #print(v[0:24])
+
     compose(v)
 
 def set_bit(n, i):
@@ -41,27 +41,21 @@ def set_bit(n, i):
 
 def compose(v):
     fsize = 0
-    #print(v[0:8])
-    for bit in v[16:24]:
-        fsize = (fsize << 1) | bit
-    for bit in v[8:16]:
-        fsize = (fsize << 1) | bit
+    print(v[0:8])
     for bit in v[0:8]:
         fsize = (fsize << 1) | bit
-   # print 'Size'
-   # print (fsize)
+    print 'Size'
+    print (fsize)
 
     data = ''
-    for byte in range(4, (fsize+4), 1):
+    for byte in range(1, (fsize +3), 1):
         char = 0
         for bit in v[byte*8: (byte + 1)*8]:
             char = (char << 1) | bit
         data = data + chr(char)
 
+    print (data)
 
-    print(data)
-   #print (v[8:32]) 
 
 if __name__ == '__main__':
-    password = int(sys.argv[2])
-    embed(sys.argv[1],password)
+    embed(sys.argv[1])
