@@ -1,0 +1,435 @@
+Single-cell analysis in cancer genomics
+Sally Jones, Assieh Saadatpour, Shujing Lai, Guoji Guo, and Guo-Cheng Yuan
+
+Abstract
+
+Genetic changes and environmental differences result in cellular
+heterogeneity among cancer cells within the same tumor, thereby complicating
+treatment outcomes. Recent advances in single-cell technologies have opened new
+avenues to characterize the intra-tumor cellular heterogeneity, identify rare
+cell types, measure mutation rates, and, ultimately, guide diagnosis and
+treatment. In this paper, we review the recent single-cell technological and
+computational advances at the genomic, transcriptomic, and proteomic levels,
+and discuss their applications in cancer research.
+
+Keywords: Single-cell analysis, Cellular heterogeneity, Cancer, Genomics,
+Transcriptomics, Proteomics Go to: Cancer is a disease of multitudes Cells are
+the basic units of life in which the blueprint of the genome is transcribed and
+translated into biological functions. Cellular heterogeneity, which results
+from mutation, differences in gene regulation, stochastic variation, or
+environmental perturbations, is reflected at the genomic, transcriptomic, and
+proteomic levels. Such heterogeneity is increasingly appreciated as a factor of
+cancer treatment failure and disease recurrence, since a treatment that targets
+one tumor cell population may not be effective against another [1]. Not only is
+cancer itself a complex disease made up of a collection of individually
+distinct pathologies, but also within each tumor, there is significant
+heterogeneity among different cells. Current theories propose that cancer
+development involves both a process of clonal evolution from mutated cells of
+origin, and a differentiation hierarchy from cancer stem cells [2]. It is
+increasingly clear that traditional bulk experiments, which only measure the
+average profile of the population, have limitations in characterizing complex
+diseases like cancer.
+
+Single cells have been studied since the invention of the microscope, but it is
+not until recently that genome-scale approaches have been applied to
+single-cell biology [3–7] (Box 1). For example, microfluidic-based
+single-cell sorting methods [8,9], high-throughput multiplexed quantitative PCR
+(qPCR) [10–14] or sequencing approaches [15–23], mass cytometry-based
+proteomic strategies [24–26], and data analysis methods [27–30]
+provided an unprecedented opportunity to identify rare cell types, such as
+cancer stem cells, and to investigate the dynamic processes of cell-fate
+transitions.
+
+One of the important application areas of single-cell analysis is in cancer
+genomics (Figure 1). Recently, a number of studies have applied single-cell
+analysis to characterize the cellular heterogeneity in different cancers
+[13,23,31–33]. The comprehensive knowledge about cellular heterogeneity
+will not only provide fundamental insights into development and other
+biological processes, but also have important applications in therapy, as drug
+resistance is often caused by heterogeneous response at the cellular level.
+
+An external file that holds a picture, illustration, etc.  Object name is
+nihms843418f1.jpg Figure 1 An overview of single-cell cancer genomics
+Single-cell technologies are used to generate genomic, transcriptomic, and
+proteomic data from cancer cells. These data are analyzed by computational
+methods to identify clusters, lineages, and networks, which in turn generate
+new biological hypotheses. Biological discoveries in turn guide development of
+new technologies and computational approaches. The figure also shows a toy
+example with a heterogeneous cancer sample containing three cell types (orange,
+blue, and purple). An integrated single-cell analysis is used to identify the
+cell-types, lineages, and network profiles.
+
+In this paper, we review the recent technological and computational advances in
+single-cell analysis, and discuss their applications in cancer genomics. We
+conclude by offering a personal view of the potential challenges and future
+prospects for this field.
+
+One of the fundamental challenges in single-cell analysis is the amplification
+of a small amount of initial nucleic acid material to reach the detection
+threshold level. Recently, significant technical advances in whole-genome
+amplification (WGA) have been achieved to overcome this challenge for
+single-cell genome analysis. Based on the protocols used for WGA, there are
+three main categories of single-cell techniques. GenomePlex PCR [32] uses
+degenerative-oligonuceotide PCR to amplify DNA from single cells. The method
+achieves low physical coverage, but the amplification is uniform across the
+genome. It is therefore suitable for copy number profiling in single cancer
+cells [32]. Another popular single-cell WGA method, Multiple Displacement
+Amplification (MDA), uses Phi29 and random primers to amplify DNA in a linear
+process through multiple displacement mechanisms [38,39]. This approach
+generates long DNA products, and achieves high-coverage amplification, and
+therefore is suitable for detection of point mutations at base-pair resolution.
+The MDA protocol was first used in single-cell exome sequencing studies to
+uncover the genetic landscape of cancer cells [38,39], and subsequently coupled
+with a microfluidic system to amplify genomes from single human sperms [40].
+Multiple annealing and looping-based amplification cycles (MALBAC) [41,42] is a
+new WGA method that uses quasi-linear pre-amplification to reduce the bias
+associated with nonlinear amplification. In MALBAC, single-stranded amplicons
+generated through strand-displacement are used as templates to produce full
+amplicons, then full amplicons form looped DNA to avoid exponential
+amplification. This approach achieves high-coverage and uniform amplification,
+and enables genome-wide detection of both single nucleotide polymorphisms
+(SNPs) and copy number variations (CNVs) of a single cell. The method has been
+applied to single SW480 cancer cells [41] as well as human oocytes [42].
+
+Another frontier with significant progress is single-cell transcriptomic
+analysis. Although there are more copies of mRNA than DNA in single cells, this
+application faces its own difficulties in quantification of different RNA
+species. In order to amplify the limited amount of mRNA in single cells,
+several approaches have emerged. The Poly-A tailing method uses terminal
+transferase to add anchoring sequences on the 3’ of synthesized cDNA, so
+that each cDNA has two primer binding sites for PCR amplification. The method
+was used in the first single-cell microarray study [43] and in the first
+single-cell mRNA-seq study [17]. Sequence specific amplification (SSA) uses
+multiplexed RT-PCR to amplify hundreds of specific targets in single cells.
+This method has a simple one-step protocol, but is limited to analyzing only a
+small number of genes [11,13]. The Smart-seq amplification method is a widely
+used approach for full-length mRNA analysis of single cells [16,21,44]. The
+method uses template-switching based protocol to anchor primer binding site on
+the 3’ cDNA. The cDNA is then amplified by PCR and sequenced by Illumina
+sequencers. Smart-seq has high coverage across transcripts, and enables
+identification of SNPs as well as different transcript isoforms. One limitation
+of Smart-seq is that the efficiency for template-switching is low and thus it
+has difficulty in profiling lowly-expressed mRNAs. CEL-seq adds T7 promoters to
+the cDNA and utilizes in vitro transcription (IVT) to amplify mRNA. The method
+also shows robust efficiency and sensitivity for single-cell transcriptomic
+profiling [15,45]. By coupling IVT with degenerative PCR based approach, the
+recently published DR-seq method even achieves integrated genome and
+transcriptome sequencing at the same time from the same cell [46].
+
+For all the aforementioned single-cell transcriptomic methods, a common
+drawback is the need to handle each single cell samples independently, which
+limits the throughput of the analysis and also may inadvertently introduce
+human error. Very recent breakthroughs solve these problems by high-throughput
+molecular barcoding of single cells in microwells or microdroplets before
+sequencing library generation [47–49]. The CytoSeq platform randomly
+deposits single cells and transcript barcoding probes into an array of
+picoliter wells before cell lysis and reverse transcription; any selection of
+genes can be amplified and analyzed from the barcoded cDNAs [47]. The Drop-seq
+and inDrop strategies, however, separate thousands of single cells into aqueous
+droplets, associate a different barcode to each cell’s RNAs, and sequence
+them all together [48,49]. These massively parallel barcoding strategies have
+significantly increased the throughput of single-cell transcriptomic analysis.
+
+The broad applications of single-cell genomic/transcriptomic analysis in the
+biomedical field have also been supported by the rapid development of
+microfluidic devices. Microfluidic devices help to automate the distribution,
+processing, and analysis of biological materials, and have significantly
+increased the measurement throughput. Microfluidic devices have been used as
+the basis for various single-cell technologies, such as the single-cell capture
+and amplification platforms [44,49], as well as high-throughput single-cell
+qPCR analysis [13]. As single-cell analysis protocols are highly sensitive to
+technical errors induced by manual processing, the accurate control provided by
+the microfluidic devices is a significant advantage. Microfluidic devices also
+improve the sensitivity of single-cell assays by confining the reaction volume
+and increasing the local concentration.
+
+In comparison to the progress made in assaying nucleic acids, single-cell
+proteomic analysis is much more challenging because, unlike DNA or RNA
+sequences, it is not possible to amplify protein sequences using current
+technologies. Standard immunofluorescence methods have been routinely used to
+analyze four markers at single-cell level. Now, highly multiplexed fluorescence
+microscopic allows analysis of up to 60 proteins in tissue specimens [50].
+Notably, the development of mass cytometry has dramatically increased the
+multiplexity of cytometry-based analysis by labeling antibodies with isotopes
+[24]. This innovation resolves the problem of spectral overlap that is common
+in normal flow cytometry. It is now possible to measure more than 40 parameters
+in a large number of single cells in a short period of time.
+
+The methods discussed above require isolation of cells from their in situ
+environment. Recently in situ methods have been developed to preserve spatial
+information [51]. By computational integration of single-cell RNA-seq data with
+in situ RNA patterns, one can accurately infer cellular localization within
+complex patterned tissues [52–56]. Similarly, mass cytometry can be coupled
+with immunohistochemical data to obtain highly multiplexed proteomic
+information at subcellular resolution [57]. Another method, called multiplexed
+ion beam imaging (MIBI), uses secondary ion mass spectrometry to image
+antibodies tagged with isotopically pure elemental metal reporters [58]. Taken
+together, these technologies have greatly facilitated the systematic analysis
+of gene and protein expression variability at the single-cell resolution.
+
+Go to: Computational methods for analyzing single-cell data With the
+technological breakthroughs that have generated large amounts of
+high-throughput single-cell data, the development of novel computational tools
+has become an integral part of the analysis. Single-cell technologies present a
+number of challenges that cannot be addressed by traditional computational
+methods. First, each cell is typically measured only once and thus there are no
+technical replicates in the strict sense. Second, the amount of starting
+material is subject to strong stochastic variation. Still at an early stage, a
+number of computational methods have been developed to address these issues
+(Figure 2).
+
+An external file that holds a picture, illustration, etc.  Object name is
+nihms843418f2.jpg Figure 2 A typical flow chart for single-cell data analysis
+Representative methods are mentioned. See the main text for detailed
+description.
+
+Preprocessing and quantification are the first steps of any large-scale data
+analysis. The purpose of these steps is to convert raw data to quantitative
+biological information. Significant effort is paid to estimation and removal of
+systematic biases due to technical variability. A major issue in single-cell
+analysis is that technical variation is always confounded with biological
+variation. One simple approach to estimate technical variability compared the
+pooled sample with bulk RNA-seq experiments [59]. More precise calibration can
+be achieved by adding spike-in RNA to the library as control, followed by
+building an error model based on the variation of the spike-in RNA [60,61].
+Methods that account for single-cell specific noise, such as dropout events and
+amplification biases, can also help to separate technical and biological
+variability of individual genes [62]. Recently, scLVM (single-cell latent
+variable model) [63] was developed to account for the confounding effects of
+cell cycle on modulating differentiation and gene expression profiles. Another
+approach to estimating reproducibility is to divide the RNA material from a
+single cell into two equal fractions which are then analyzed independently
+[20]. A recent review article [64] has provided a detailed survey of the
+computational methods and, in particular, the normalization steps for
+single-cell RNA-seq data from counts to expression values with or without
+unique molecular identifiers. For single-cell qPCR data, normalization to an
+endogenous control is not usually recommended due to biological variation and
+transcriptional noise exhibited by single cells [65]. It was shown that
+normalizing by the median Ct (threshold cycle) reduces variability in
+single-cell qPCR data [65]. For mass cytometry data, technical variations can
+be corrected with bead standards [66]. Normalization methods for CNV detection
+based on channel, genome composition, and recurrent genome artifact corrections
+have also been developed [67]. A review of the computational approaches to
+correct for biases in the WGA procedure and accurately determine copy number
+profiles has been outlined before [68].
+
+The high-dimensionality of single-cell data provides a challenge for
+visualization. Several dimensionality reduction approaches are available to map
+the data points into a lower dimensional space while maintaining the
+single-cell resolution. The conventional principal component analysis (PCA) has
+been used to visualize single-cell data in different contexts [13,24,69].
+Despite its success, this method relies on a linear assumption, and thus cannot
+fully capture the nonlinear relationships inherent in many single-cell
+datasets. This limitation can potentially be overcome by using a wide variety
+of non-linear methods [27,30,70–73], although the performance of each
+method is likely to be context dependent. The t-distributed stochastic neighbor
+embedding (t-SNE) [72,73] preserves both the global layout and local structure
+of the high-dimensional data by converting the Euclidean distances between each
+pair of data points into heavy-tailed conditional probabilities. A distributed
+implementation of the t-SNE algorithm, called viSNE [27], has been employed to
+visualize single-cell mass cytometry data. Another approach based on the
+Gaussian process latent variable model generates a smooth mapping from the
+latent space to the original data space [71]. This method was extended to a
+probabilistic PCA approach to account for censoring effect due to undetected
+transcripts [70]. More recently, a dimensionality reduction approach based on
+diffusion maps was adapted to identify and visualize the hematopoietic
+developmental progression in mouse embryo [30]. In this approach, the cells are
+related to each other through a gradual but stochastic, diffusion-like process.
+All these methods can help interrogate the relationships among different cell
+types in a lower dimensional space.
+
+Unsupervised clustering is a widely used approach to group samples with similar
+properties, which can be used for identifying previously unknown subpopulations
+from single-cell data. Besides the classical clustering methods, a number of
+approaches have recently been developed to analyze single-cell data. For
+example, ACCENSE (automatic classification of cellular expression by nonlinear
+stochastic embedding) [74] combines the t-SNE algorithm with density-based
+partitioning without the need to pre-specify the number of target clusters.
+Another recent effort in this direction is SNN-Cliq [75], which achieves
+clustering of single-cell transcriptomic data by a graph theory-based
+algorithm. For low-dimensional single-cell expression data emerging from qPCR
+or FACS, the multiresolution correlation analysis (MCA) [76] can be useful in
+identifying subpopulations based on local pairwise gene correlations. In an
+effort to improve traditional manual gating in flow cytometry data, Citrus [77]
+was developed, which identifies stratifying subpopulations of cells whose
+abundance or behavior is correlated with a known endpoint of interest.
+
+Having identified the cell subpopulations, one can identify the sets of genes
+that best discriminate these subpopulations. In addition to the standard
+differential expression tools for bulk experiments, new methods have been
+developed to address the specific challenges in single-cell data analysis. For
+example, SCDE (single-cell differential expression) uses a Bayesian approach
+that accounts for the likelihood of dropout events in single-cell RNA-seq data
+[62]. In another approach, MIMOSA (mixture models for single-cell assays)
+employs a mixture model where information is shared across subjects through
+exchangeable priors allowing to increase the power of detecting true
+differences [78].
+
+Although clustering approaches reveal the underlying group structure within the
+data, they cannot provide information on the lineage relationships between
+different developmental stages. One method along this direction is SCUBA
+(single-cell clustering using bifurcation analysis) [28], which first infers
+the cellular hierarchy using dynamic clustering and then models gene expression
+dynamics using bifurcation theory. However, the application of SCUBA requires
+temporal information, which is often difficult to obtain experimentally.
+Computational methods have been developed to infer temporal information from
+snapshot single-cell data, including using principal curve analysis [79], and
+graph-model based algorithms such as Monocle [29] and Wanderlust [80]. The
+inferred temporal information can then be used as input to identify bifurcation
+events [28]. However, it is challenging to accurately infer temporal
+information if the bifurcation structure is complex. A related approach is
+SPADE (spanning-tree progression analysis of density-normalized events)
+[24,81], which infers cell lineages without assigning temporal order. In this
+case, additional biological knowledge is needed to interpret the resulting tree
+structure. Similar approaches have been developed to infer clonal structure
+using single-cell genomic data [82].
+
+Network modeling can provide mechanistic insights into the coordination of gene
+activities and help to understand the overall dynamics of the system. Efforts
+are underway to apply network-modeling approaches to single-cell data. A simple
+but popular approach is to construct networks based on co-expression. A variant
+of this approach, called weighted gene co-expression network analysis (WGCNA)
+[83,84], uses a soft threshold for modeling co-expression and also identifies
+network modules (i.e., genes with coordinated activities). Co-expression
+networks have been applied to single-cell analysis of the mammalian embryonic
+development [19], hematopoiesis [14], neural stem cells [85], and leukemia
+[33,86]. Although network analysis provided novel insights in these studies,
+existing methods are applicable only if the sample size is sufficiently large
+and therefore are not directly applicable for studying the networks associated
+with rare cell types. In addition, correcting for latent confounding factors in
+single-cell data can help to reduce false positive links in these networks
+[63,87]. Co-expression networks can also be integrated with other types of
+data, such as ChIP-seq data, to estimate the underlying gene regulatory network
+[10]. Most network models are only a static representation of the system and do
+not explicitly consider the underlying gene expression dynamics. Building
+self-contained dynamic network models is challenging, although there are some
+approaches, such as Boolean networks, that have been applied to study stem cell
+differentiation processes [30,88].
+
+Taken together, these data analysis methods have greatly enabled researchers to
+systematically extract quantitative information from the single-cell data,
+thereby playing an important role in applying single-cell technologies to
+investigate biomedical problems.
+
+Go to: Applications in cancer genomics Genome instability is a hallmark of
+cancer. Spatial and temporal knowledge of the cancer genome will have a
+significant impact on identifying cancer subtypes and developing
+patient-specific treatment strategies. A notable application of single-cell
+genome sequencing is in inferring tumor evolution paths. For example,
+single-cell genome sequencing applied to two human breast cancer cases
+suggested that tumors grow by punctuated clonal expansions with few persistent
+intermediates [32]. Another study on a thrombocythemia patient uncovered the
+likely monoclonal origin of this neoplasm [38]. Compared to the widely used
+bulk sequencing methods, single-cell cancer genome analysis has the advantage
+of characterizing intra-tumor cellular heterogeneity. For example, it has been
+used to map the intra-tumoral genetic landscape in kidney cancer [39],
+colorectal cancer [31], and leukemia [82]. Another intensely researched area is
+the detection and sequencing of circulating tumor cells (CTCs) for either
+understanding the metastatic process or early tumor detection. For example, a
+study on reproducibility of CNV patterns in CTCs of lung cancer patients
+suggested that CNVs at certain genomic loci are selected for the metastasis of
+cancer [89]. A recent whole-exome sequencing of CTCs provided insights into the
+mutational landscape of metastatic prostate cancer [90]. Recently, a
+high-coverage, whole-genome/exome single-cell sequencing method (nuc-seq) was
+developed and applied to breast cancer data wherein a large number of subclonal
+and de novo mutations were found, suggesting that point mutations evolved
+gradually over long periods of time [91]. In another study, by using
+single-cell whole-exome sequencing in multiple myeloma, it was demonstrated
+that the disease develops through a branching and parallel evolutionary
+pattern, where two divergent clones independently acquired the same convergent
+phenotype [92].
+
+Single-cell transcriptomic advances in cancer research are also notable. For
+example, by using single-cell qPCR analysis in human colon cancer, it was found
+that multi-lineage differentiation represents a key source of in vivo
+functional and phenotypic cancer cell heterogeneity [13]. The Smart-seq method
+was used for profiling full length mRNA from single cells wherein by analyzing
+CTCs from melanomas, distinct gene expression signatures as well as alternative
+splicing events specific to the disease were identified [16]. A recent
+single-cell qPCR analysis of a mouse model of acute myeloid leukemia identified
+two subpopulations of leukemic cells, each characterized by distinct
+co-expression networks [33]. Another study using single-cell RNA-seq analysis
+in five primary glioblastomas (GBs) revealed that current GB classifiers are
+variably expressed across single cells within a tumor, suggesting that
+single-cell data can capture the true diversity of transcriptional subtypes
+within a tumor that cannot be detected by population-level data alone [23].
+
+Single-cell proteomic approaches from flow cytometry, to mass cytometry, and
+multiplexed imaging, have also made great contributions to cancer research
+[27,57,58,93,94]. For example, an application of the viSNE approach to mass
+cytometry data on healthy and leukemic bone marrow samples showed that while
+the maps of healthy samples overlap, the leukemic samples from different
+patients form distinct populations from healthy bone marrow and from each other
+[27]. Moreover, integration of mass cytometry with multiplexed imaging
+techniques on breast cancer samples revealed substantial tumor microenvironment
+heterogeneity [57,58].
+
+All these examples demonstrate that single-cell technologies provide a powerful
+approach to study the diversity and evolution of single cancer cells, which can
+ultimately be applied to the clinic from early detection to identifying
+therapeutic strategies for cancer patients.
+
+Go to: Challenges and prospects Single-cell analysis is still a new field, and
+there remain a number of significant challenges ahead (Box 2). A major goal for
+technological development is to improve the throughput and accuracy of the
+assays while reducing the cost. Promising results have been obtained by recent
+development of several approaches such as massive barcoding, microwells, and
+microdroplets [47–49]. Most technologies for single-cell analysis require
+the destruction of cells, and thus the temporal information is lost during the
+process. Along these lines, live-cell imaging technologies have generated
+exciting results [95]. Similarly, isolating single cells from a tissue results
+in loss of information about the spatial context, imposing a barrier for
+investigating the role of microenvironmental factors in gene regulation and
+cell-fate decisions. This issue is especially problematic for studying tumor
+progression, which is known to depend heavily on its interaction with the
+microenvironment. In this direction, several promising approaches have been
+developed as discussed above [51–56]. Similarly, methods for single-cell
+epigenomic profiling are still underdeveloped, although some promising strides
+have been made [96–100]. Further development in this area would aid to
+dissect the role of DNA methylation heterogeneity in cancer cells. Ideally,
+this would involve the measurement of gene expression, chromatin states, and
+DNA methylation states in a single cell, in order to elucidate the precise
+regulatory mechanisms at the single-cell resolution. However, such an
+integrated approach will require applying multiple measurement platforms on the
+same molecule without alteration of its property, a task that seems to be
+daunting if not impossible.
+
+Computational method development is an integral component of every new
+technology. However, single-cell analysis presents unique challenges that
+require not only incremental changes but also revolutionary breakthroughs. Each
+analysis pipeline begins with extracting the signal from raw data, which
+requires the identification and correction of systematic technical noise in
+order to properly calibrate different samples and batches. For single-cell
+analysis, it remains challenging to distinguish technical variations from
+biological variations [60–63]. Rare cell types, by definition, consist of a
+small cell-population and may be detectable only in a relatively large cell
+population. It is difficult to distinguish them from technical artifacts as
+traditional clustering algorithms, which favor robustness, tend to identify
+large subpopulations. Another challenge is to distinguish transient variations,
+such as the ones caused by stochastic noise or regular cell-cycle variation,
+from those that are essential for cell identity. Integration analysis of gene
+expression data with states and transcription factor binding
+information has been useful for interpreting the underlying gene
+regulatory networks. However, as it remains difficult to map chromatin states
+and transcription binding at single-cell resolution, it is important, but
+challenging, to develop novel computational methods to integrate single-cell
+gene expression data with population level datasets. 
+
+Perhaps most importantly, great efforts are required to improve single-cell technologies and
+computational methods in order to have direct implications in clinical
+decision-making.
+
+
+Nevertheless, single-cell analysis undoubtedly presents tremendous
+opportunities. Taken together, applications of single-cell analysis will
+greatly enhance the power of systematic characterization of cancer
+heterogeneity and lead to mechanistic insights into cancer progression, which
+ultimately will aid the development of novel therapeutic strategies, help us
+better understand the mechanisms of drug resistance, and lead to improvement of
+clinical outcomes.
+
+^^ Consult Professor Yuan about this statement
+
+Also, append images after selection with ImageJ. A picture is worth a thousand words.
+
+
